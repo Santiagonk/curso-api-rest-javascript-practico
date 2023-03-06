@@ -12,6 +12,7 @@ async function getTrendingMoviesPreview() {
   const { data } = await api('trending/movie/day');
   const movies = data.results;
 
+  trendingMoviesPreviewList.innerHTML = "";
   movies.forEach(movie => {
     const trendingPreviewMoviesContainer = document.querySelector('#trendingPreview .trendingPreview-movieList')
     
@@ -35,6 +36,8 @@ async function getCategegoriesPreview() {
   const { data } = await api('genre/movie/list');
   const categories = data.genres;
   
+  categoriesPreviewList.innerHTML = "";
+
   categories.forEach(category => {
     const previewCategoriesContainer = document.querySelector('#categoriesPreview .categoriesPreview-list')
     
@@ -51,7 +54,3 @@ async function getCategegoriesPreview() {
     previewCategoriesContainer.appendChild(categoryContainer);
   });
 }
-
-
-getTrendingMoviesPreview();
-getCategegoriesPreview();
