@@ -102,8 +102,8 @@ async function getTrendingMovies() {
   createMovies(movies, genericSection);
 }
 
-async function getMovieById(MovieId) {
-  const { data: movie } = await api(`movie/${MovieId}`);
+async function getMovieById(movieId) {
+  const { data: movie } = await api(`movie/${movieId}`);
 
   const movieImgUrl = 'https://image.tmdb.org/t/p/w500' + movie.poster_path;
   headerSection.getElementsByClassName.background = headerSection.style.background = `
@@ -119,5 +119,14 @@ async function getMovieById(MovieId) {
   movieDetailDescription.textContent = movie.overview;
   movieDetailScore.textContent = movie.vote_average;
 
-  createCategories(movie.genres, movieDetailCategoriesList)
+  createCategories(movie.genres, movieDetailCategoriesList);
+  getRelatedMoviesId(movieId);
+}
+
+async function getRelatedMoviesId(id) {
+
+  const { data } = await api(`movie/${id}/recommendations`);
+  const  relatedMovies = data.results;
+
+  createMovies(relatedMovies, relatedMoviesContainer);
 }
